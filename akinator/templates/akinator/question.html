@@ -1,0 +1,12 @@
+{% block heading %}
+    {{obj.question_text}}
+{% endblock heading %}
+
+{% block content %}
+<ol>
+    {% for r in obj.responses %}
+    <li>{{r}}</li>
+    {% endfor %}
+</ol>
+    <a href="{% url 'index' %}">Click here to go to index</a>
+{% endblock content %}
