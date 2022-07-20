@@ -1,3 +1,4 @@
+import pandas as pd
 from django.db import models
 
 # Create your models here.
@@ -14,3 +15,28 @@ class Character(models.Model):
     first_appearance = models.TextField()
     year = models.IntegerField()
     company = models.CharField(max_length=10)
+
+
+def populate_from_csv(csv_path):
+    characters = []
+    df = pd.read_csv(csv_path)
+    for idx, data in df.iterrows():
+        alive = False
+        if data["ALIVE"][0] == "L":
+            alive = True
+        characters.append(
+            Character(
+                name=data["name"],
+                id_status=data["ID"],
+                align=data["ALIGN"],
+                eye=data["EYE"],
+                hair=data["HAIR"],
+                sex=data["SEX"],
+                gsm=data["GSM"],
+                alive=alive,
+                appearances=data["APPEARANCES"],
+                first_appearance=data["FIRST APPEARANCE"],
+                year=int(df["YEAR"]),
+                company=df["Company"],
+            )
+        )
